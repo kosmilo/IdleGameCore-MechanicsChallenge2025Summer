@@ -1,19 +1,32 @@
 using System;
 using UnityEngine;
-using UnityEngine.UI;
-using BreakInfinity;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private Button _button;
+    public static GameManager Instance;
 
     private void Awake()
     {
-        _button.onClick.AddListener(CreateClickResource);
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
     }
 
-    private void CreateClickResource()
+    public void Update()
     {
-        ResourceData.IncreasePrimaryResource(1);
+        ResourceManager.Instance.IncreasePrimaryResource(ResourceManager.Instance.Rats.GenerationRate * Time.deltaTime);
+    }
+
+    public void CreateClickResource()
+    {
+        ResourceManager.Instance.IncreasePrimaryResource(1);
+    }
+
+    internal void BuyRat(int amount)
+    {
+        ResourceManager.Instance.BuyRat(amount);
     }
 }

@@ -1,20 +1,24 @@
-using System;
-using BreakInfinity;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _resourceUGUI;
+    [SerializeField] private TextMeshProUGUI _profitUGUI;
+    [SerializeField] private Button _makeProfitBtn;
 
     private void Start()
     {
-        _resourceUGUI.text = "0";
-        ResourceData.OnPrimaryResourceAmountChanged += UpdateResourceText;
+        _makeProfitBtn.onClick.AddListener(GameManager.Instance.CreateClickResource);
     }
 
-    private void UpdateResourceText(BigDouble resourceAmount)
+    private void Update()
     {
-        _resourceUGUI.text = resourceAmount.ToString();
+        UpdateResourceText();
+    }
+
+    private void UpdateResourceText()
+    {
+        _profitUGUI.text = ResourceManager.Instance.Profit.ToString("F0");
     }
 }
