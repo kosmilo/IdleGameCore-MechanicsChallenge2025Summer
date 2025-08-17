@@ -13,6 +13,15 @@ MonoBehaviour:
   m_Name: RatGenerator
   m_EditorClassIdentifier: 
   <BaseCost>k__BackingField: 8
-  <SingleUnitGeneration>k__BackingField: 0.2
+  <SingleUnitGeneration>k__BackingField: 0.15
   <CostIncreaseExponential>k__BackingField: 1.0001
   <CostIncreaseLinear>k__BackingField: 0.5
+  <Multipliers>k__BackingField:
+  - RequiredCount: 25
+    MultiplierAmount: 1.5
+  - RequiredCount: 50
+    MultiplierAmount: 1.5
+  - RequiredCount: 100
+    MultiplierAmount: 2
+  - RequiredCount: 500
+    MultiplierAmount: 2

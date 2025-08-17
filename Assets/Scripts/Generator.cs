@@ -1,30 +1,38 @@
+using System.Linq;
 using BreakInfinity;
 
 public class Generator
 {
-    public int BaseCost { get; private set; }
-    public BigDouble SingleUnitGeneration { get; private set; }
+    private int _baseCost;
+    private BigDouble _singleUnitRawGeneration;
 
-    public float CostIncreaseExponential { get; private set; }
-    public float CostIncreaseLinear { get; private set; }
+    private float _costIncreaseExponential;
+    private float _costIncreaseLinear;
+
+    private Multiplier[] _availableMultipliers;
+    private int _multiplierIndex; // Keep index of the next multiplier so we don't check each multiplier for unlock
 
     public BigDouble Count { get; private set; }
     public BigDouble GenerationRate { get; private set; } // Per second
+    public BigDouble GenerationMultiplier { get; private set; } = 1;
 
     public Generator(GeneratorDataSO data)
     {
-        BaseCost = data.BaseCost;
-        SingleUnitGeneration = data.SingleUnitGeneration;
-        CostIncreaseExponential = data.CostIncreaseExponential;
-        CostIncreaseLinear = data.CostIncreaseLinear;
+        _baseCost = data.BaseCost;
+        _singleUnitRawGeneration = data.SingleUnitGeneration;
+        _costIncreaseExponential = data.CostIncreaseExponential;
+        _costIncreaseLinear = data.CostIncreaseLinear;
+        _availableMultipliers = data.Multipliers;
     }
+
+    public BigDouble GetSingleUnitGeneration() => _singleUnitRawGeneration * GenerationMultiplier;
 
     /// <summary>
     /// Calculate cost of single purchase.
     /// </summary>
     public BigDouble GetCost()
     {
-        return BaseCost * BigDouble.Pow(CostIncreaseExponential, Count) + CostIncreaseLinear * Count;
+        return _baseCost * BigDouble.Pow(_costIncreaseExponential, Count) + _costIncreaseLinear * Count;
     }
 
     /// <summary>
@@ -33,15 +41,16 @@ public class Generator
     public BigDouble GetCost(int amount)
     {
         // See https://blog.kongregate.com/the-math-of-idle-games-part-i/ for formula
-        BigDouble exponentialIncrease = BaseCost * (BigDouble.Pow(CostIncreaseExponential, Count)
-            * (BigDouble.Pow(CostIncreaseExponential, amount) - 1)) / (CostIncreaseExponential - 1);
-        BigDouble linearIncrease = CostIncreaseLinear * (amount * Count + (amount * (amount - 1) / 2));
+        BigDouble exponentialIncrease = _baseCost * (BigDouble.Pow(_costIncreaseExponential, Count)
+            * (BigDouble.Pow(_costIncreaseExponential, amount) - 1)) / (_costIncreaseExponential - 1);
+        BigDouble linearIncrease = _costIncreaseLinear * (amount * Count + (amount * (amount - 1) / 2));
         return (linearIncrease + exponentialIncrease).Round();
     }
 
     public void Add(int amount)
     {
         Count += amount;
+        AddMultipliers();
         CalculateGenerationRate();
     }
 
@@ -60,6 +69,17 @@ public class Generator
 
     private void CalculateGenerationRate()
     {
-        GenerationRate = SingleUnitGeneration * Count;
+        GenerationRate = _singleUnitRawGeneration * Count * GenerationMultiplier;
+    }
+
+    private void AddMultipliers()
+    {
+        if (_availableMultipliers == null || _multiplierIndex >= _availableMultipliers.Count()) return;
+
+        if (Count >= _availableMultipliers[_multiplierIndex].RequiredCount)
+        {
+            GenerationMultiplier *= _availableMultipliers[_multiplierIndex].MultiplierAmount;
+            _multiplierIndex++;
+        }
     }
 }

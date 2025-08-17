@@ -66,7 +66,7 @@ public class RatsUI : MonoBehaviour
     private void UpdateTextAndButtons()
     {
         _ratsCountUGUI.text = "Rats: " + ResourceManager.Instance.Rats.Count.ToString("F0");
-        _ratsPPSUGUI.text = $"PPS: {ResourceManager.Instance.Rats.GenerationRate.ToString("F2")} ({ResourceManager.Instance.Rats.SingleUnitGeneration.ToString("F2")})";
+        _ratsPPSUGUI.text = $"PPS: {ResourceManager.Instance.Rats.GenerationRate.ToString("F2")} ({ResourceManager.Instance.Rats.GetSingleUnitGeneration().ToString("F2")})";
 
         foreach (ButtonWrapper wrapper in hireButtons)
         {
