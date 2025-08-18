@@ -10,14 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: adc776d88fa21c142b5b7c0205ab46f9, type: 3}
-  m_Name: Booster_BreadCrumbs
+  m_Name: Booster_2_FruitSlices
   m_EditorClassIdentifier: 
-  <ID>k__BackingField: fadb2091-88eb-4d56-b6c6-78535604e0b7
-  <BoosterName>k__BackingField: Bread Crumbs
-  <BaseCost>k__BackingField: 10
+  <ID>k__BackingField: f5bb285c-525e-4a31-95a9-6a59320e8ef7
+  <BoosterName>k__BackingField: Fruit Slices
   <BaseBoost>k__BackingField:
     mantissa: 1
-    exponent: -2
+    exponent: -1
   <BaseConsumptionRate>k__BackingField:
     mantissa: 1
-    exponent: -4
+    exponent: -5

@@ -9,4 +9,9 @@ public class BoosterDataSO : ScriptableObject
     [field: SerializeField] public string BoosterName { get; set; }
     [field: SerializeField] public BigDouble BaseBoost { get; private set; } = 0.01; // How much generation is boosted per unit
     [field: SerializeField] public BigDouble BaseConsumptionRate { get; private set; } = 0.01;
+
+    private void OnValidate()
+    {
+        if (ID == "") ID = Guid.NewGuid().ToString();
+    }
 }

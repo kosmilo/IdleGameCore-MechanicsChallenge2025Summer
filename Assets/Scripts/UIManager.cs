@@ -20,7 +20,7 @@ public class UIManager : MonoBehaviour
 
     private void UpdateResourceText()
     {
-        _profitUGUI.text = ResourceManager.Instance.Profit.ToString("F0");
-        _totalPPSUGUI.text = "PPS: " + ResourceManager.Instance.PPS.ToString("F2");
+        _profitUGUI.text = Utils.FormatNum(ResourceManager.Instance.Profit, false);
+        _totalPPSUGUI.text = "PPS: " + Utils.FormatNum(ResourceManager.Instance.PPS);
     }
 }

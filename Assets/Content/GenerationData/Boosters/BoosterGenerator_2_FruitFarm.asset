@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5034a0e0c3b6b1248a34724f92bf06de, type: 3}
+  m_Name: BoosterGenerator_2_FruitFarm
+  m_EditorClassIdentifier: 
+  <ID>k__BackingField: ca830371-9319-48d8-933b-115e09554787
+  <GeneratorName>k__BackingField: Fruit Farm
+  <BaseCost>k__BackingField:
+    mantissa: 8
+    exponent: 2
+  <SingleUnitGeneration>k__BackingField: 0.4
+  <CostIncreaseExponential>k__BackingField: 1.007
+  <CostIncreaseLinear>k__BackingField: 5
+  <Multipliers>k__BackingField: []
+  <GenerationTarget>k__BackingField: {fileID: 11400000, guid: 62a41af7520795046b3a6fbe6fa11214, type: 2}

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcd4e90442da0194ba279cd69b865d78, type: 3}
   m_Name: Generator_Rats
   m_EditorClassIdentifier: 
-  <ID>k__BackingField: 36da2956-ae68-4cad-80b3-6f9edcdb18e1
+  <ID>k__BackingField: a4dd0181-0c7b-49c9-9b7c-7193689c126d
   <GeneratorName>k__BackingField: Rats
   <BaseCost>k__BackingField: 8
   <SingleUnitGeneration>k__BackingField: 0.15

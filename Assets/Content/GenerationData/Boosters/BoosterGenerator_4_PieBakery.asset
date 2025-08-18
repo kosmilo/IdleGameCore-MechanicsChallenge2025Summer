@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5034a0e0c3b6b1248a34724f92bf06de, type: 3}
+  m_Name: BoosterGenerator_4_PieBakery
+  m_EditorClassIdentifier: 
+  <ID>k__BackingField: 19c00e4e-dfdd-4b95-a12d-6913f6ab4454
+  <GeneratorName>k__BackingField: Pie Bakery
+  <BaseCost>k__BackingField:
+    mantissa: 8
+    exponent: 4
+  <SingleUnitGeneration>k__BackingField: 3.14
+  <CostIncreaseExponential>k__BackingField: 1.007
+  <CostIncreaseLinear>k__BackingField: 5
+  <Multipliers>k__BackingField: []
+  <GenerationTarget>k__BackingField: {fileID: 11400000, guid: a778ffb7b41d97d48b224892a065270c, type: 2}

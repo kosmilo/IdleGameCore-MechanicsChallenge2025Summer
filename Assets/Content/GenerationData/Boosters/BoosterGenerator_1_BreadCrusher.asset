@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5034a0e0c3b6b1248a34724f92bf06de, type: 3}
-  m_Name: BoosterGenerator_BreadCrusher
+  m_Name: BoosterGenerator_1_BreadCrusher
   m_EditorClassIdentifier: 
-  <ID>k__BackingField: 9cf1fb68-58e9-4925-a171-808488eaabed
+  <ID>k__BackingField: af09f158-faec-47f6-b838-1325975b6071
   <GeneratorName>k__BackingField: Bread Crusher
-  <BaseCost>k__BackingField: 50
+  <BaseCost>k__BackingField:
+    mantissa: 8
+    exponent: 1
   <SingleUnitGeneration>k__BackingField: 0.2
   <CostIncreaseExponential>k__BackingField: 1.007
   <CostIncreaseLinear>k__BackingField: 5
   <Multipliers>k__BackingField: []
-  <GenerationTarget>k__BackingField: {fileID: 11400000, guid: c5eb8ee8fd800af46bf73ac47208382e, type: 2}
+  <GenerationTarget>k__BackingField: {fileID: 11400000, guid: 1b1aafcc7cf364e4b90d05bfde2c0a37, type: 2}

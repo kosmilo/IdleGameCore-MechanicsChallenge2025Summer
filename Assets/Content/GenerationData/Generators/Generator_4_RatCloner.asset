@@ -10,14 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 142e153f1af5e3a4c83d9520e1b33d7e, type: 3}
-  m_Name: Generator_RatCare
+  m_Name: Generator_4_RatCloner
   m_EditorClassIdentifier: 
-  <ID>k__BackingField: e735245f-c446-4191-94de-e461118cdfe2
-  <GeneratorName>k__BackingField: Rat Daycare
-  <BaseCost>k__BackingField: 100
-  <SingleUnitGeneration>k__BackingField: 0.2
-  <CostIncreaseExponential>k__BackingField: 1.007
-  <CostIncreaseLinear>k__BackingField: 5
+  <ID>k__BackingField: b46a4e9a-27d9-4204-ae16-58a699f60848
+  <GeneratorName>k__BackingField: Rat Cloner
+  <BaseCost>k__BackingField:
+    mantissa: 3.2
+    exponent: 10
+  <SingleUnitGeneration>k__BackingField: 450
+  <CostIncreaseExponential>k__BackingField: 1.24
+  <CostIncreaseLinear>k__BackingField: 1000
   <Multipliers>k__BackingField:
   - RequiredCount: 50
     MultiplierAmount: 1.2
