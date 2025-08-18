@@ -2,9 +2,9 @@ using BreakInfinity;
 
 public static class Utils
 {
-    public static string FormatNum(BigDouble num, bool canFloat = true)
+    public static string FormatNum(BigDouble num, bool canFloat = false)
     {
-        if (num < 10 && canFloat)
+        if (num < 100 && canFloat)
         {
             return num.ToString("F2");
         }
@@ -14,7 +14,7 @@ public static class Utils
         }
         else
         {
-            return num.ToString("G4");
+            return num.ToString("E1");
         }
     }
 }

@@ -21,6 +21,6 @@ public class UIManager : MonoBehaviour
     private void UpdateResourceText()
     {
         _profitUGUI.text = Utils.FormatNum(ResourceManager.Instance.Profit, false);
-        _totalPPSUGUI.text = "PPS: " + Utils.FormatNum(ResourceManager.Instance.PPS);
+        _totalPPSUGUI.text = "PPS: " + Utils.FormatNum(ResourceManager.Instance.PPS, true);
     }
 }

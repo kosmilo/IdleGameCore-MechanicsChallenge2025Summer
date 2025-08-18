@@ -4,25 +4,17 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-[Serializable]
-public struct ButtonWrapper
-{
-    public Button Btn;
-    public TextMeshProUGUI CostUGUI;
-    public int Amount;
-}
-
 public class GeneratorUI : MonoBehaviour
 {
     [SerializeField] private GeneratorDataSO _generatorData;
 
-    [SerializeField] private TextMeshProUGUI _ratsCountUGUI;
-    [SerializeField] private TextMeshProUGUI _ratsPPSUGUI;
-    [SerializeField] private ButtonWrapper[] hireButtons;
+    [SerializeField] private TextMeshProUGUI _CountUGUI;
+    [SerializeField] private TextMeshProUGUI _PPSUGUI;
+    [SerializeField] private BuyButton[] hireButtons;
 
     private void Start()
     {
-        foreach (ButtonWrapper wrapper in hireButtons)
+        foreach (BuyButton wrapper in hireButtons)
         {
             wrapper.Btn.onClick.AddListener(() =>
             {
@@ -39,14 +31,13 @@ public class GeneratorUI : MonoBehaviour
     private void UpdateTextAndButtons()
     {
         Generator generator = ResourceManager.Instance.GetGenerator(_generatorData.ID);
-        _ratsCountUGUI.text = _generatorData.GeneratorName + ": " + Utils.FormatNum(generator.GetCount());
-        _ratsPPSUGUI.text = $"PPS: {Utils.FormatNum(generator.GenerationRate)} ({Utils.FormatNum(generator.GetSingleUnitGeneration())})";
+        _CountUGUI.text = _generatorData.GeneratorName + ": " + Utils.FormatNum(generator.GetCount());
+        _PPSUGUI.text = $"PPS: {Utils.FormatNum(generator.GenerationRate, true)} ({Utils.FormatNum(generator.GetSingleUnitGeneration(), true)})";
 
-        foreach (ButtonWrapper wrapper in hireButtons)
+        foreach (BuyButton buyButton in hireButtons)
         {
-            BigDouble cost = generator.GetCost(wrapper.Amount);
-            wrapper.CostUGUI.text = Utils.FormatNum(cost);
-            wrapper.Btn.interactable = cost <= ResourceManager.Instance.Profit;
+            BigDouble cost = generator.GetCost(buyButton.Amount);
+            buyButton.UpdateButton(cost);
         }
     }
 }

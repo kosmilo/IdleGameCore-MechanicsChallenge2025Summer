@@ -17,6 +17,6 @@ public class BoosterUI : MonoBehaviour
     {
         GenerationBooster booster = ResourceManager.Instance.GetBooster(_boosterData.ID);
         _countUGUI.text = _boosterData.BoosterName + ": " + Utils.FormatNum(booster.Count);
-        _boostUGUI.text = $"Boost: {Utils.FormatNum(booster.GetBoost())} ({Utils.FormatNum(booster.GetBaseBoost())})";
+        _boostUGUI.text = $"Boost: {Utils.FormatNum(booster.GetBoost(), true)} ({Utils.FormatNum(booster.GetBaseBoost(), true)})";
     }
 }
