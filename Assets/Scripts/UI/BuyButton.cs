@@ -15,9 +15,9 @@ public class BuyButton : MonoBehaviour
         _amountUGUI.text = Utils.FormatNum(Amount);
     }
 
-    public void UpdateButton(BigDouble cost)
+    public void UpdateButton(BigDouble cost, string generatorID)
     {
         _costUGUI.text = Utils.FormatNum(cost);
-        Btn.interactable = cost <= ResourceManager.Instance.Profit;
+        Btn.interactable = ResourceManager.Instance.CanBuy(generatorID, Amount);
     }
 }

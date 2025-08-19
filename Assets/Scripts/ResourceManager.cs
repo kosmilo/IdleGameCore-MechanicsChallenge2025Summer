@@ -15,7 +15,10 @@ public class ResourceManager : MonoBehaviour
 
     public static ResourceManager Instance { get; private set; }
     public BigDouble Profit { get; private set; }
-    public BigDouble PPS { get; private set; }
+    public BigDouble BoosterMultiplier { get; private set; }
+    public BigDouble PPS { get; private set; } // Profit per second
+    public BigDouble RPS { get; private set; } // Rats per second
+    public BigDouble UnboostedRPS { get; private set; }
 
     private Dictionary<string, Generator> _generators = new(); // ID lookup
     private Dictionary<string, GenerationBooster> _boosters = new();
@@ -74,33 +77,38 @@ public class ResourceManager : MonoBehaviour
     public void Update()
     {
         // Calculate profit boost
-        BigDouble boosterMultiplier = 1;
+        BoosterMultiplier = 0;
         foreach (GenerationBooster booster in _boosters.Values)
         {
-            boosterMultiplier += booster.GetBoost();
+            BoosterMultiplier += booster.GetBoost();
         }
 
         // Handle generation
         PPS = 0;
+        RPS = 0;
+        UnboostedRPS = 0;
         foreach (Generator generator in _generators.Values)
         {
             switch (generator.Type)
             {
                 case GeneratorType.Profit:
-                    PPS += generator.GenerationRate * boosterMultiplier;
-                    Profit += generator.GenerationRate * boosterMultiplier * Time.deltaTime;
+                    PPS += generator.GenerationRate * (1 + BoosterMultiplier);
+                    Profit += generator.GenerationRate * (1 + BoosterMultiplier) * Time.deltaTime;
                     break;
                 case GeneratorType.Booster:
                     GenerationBooster targetBooster = _boosters[generator.TargetID];
                     targetBooster.Add(generator.GenerationRate * Time.deltaTime);
                     break;
                 case GeneratorType.Generator:
+                    UnboostedRPS += generator.GenerationRate;
+                    RPS += generator.GenerationRate * (1 + BoosterMultiplier);
                     Generator targetGenerator = _generators[generator.TargetID];
-                    targetGenerator.Add(generator.GenerationRate * Time.deltaTime);
+                    targetGenerator.Add(generator.GenerationRate * (1 + BoosterMultiplier) * Time.deltaTime);
                     break;
             }
         }
 
+        // Consume boosters
         BigDouble profitGeneratorCount = _generators[_profitGeneratorData.ID].GetCount();
         foreach (GenerationBooster booster in _boosters.Values)
         {
@@ -114,14 +122,48 @@ public class ResourceManager : MonoBehaviour
         {
             BigDouble cost = generator.GetCost(amount);
 
-            if (Profit >= cost)
+            if (generator.Type == GeneratorType.Profit || generator.Type == GeneratorType.Generator) // Profit gens and rat gens cost profit
             {
-                Profit -= cost;
-                generator.Add(amount);
+                if (Profit >= cost)
+                {
+                    Profit -= cost;
+                    generator.Add(amount);
+                }
+                else Debug.LogError("Not enough profit to buy");
             }
-            else Debug.LogError("Not enough profit to buy");
+            else if (generator.Type == GeneratorType.Booster) // Booster gens cost rats
+            {
+                Generator ratGen = _generators[_profitGeneratorData.ID];
+                if (ratGen.GetCount() >= cost)
+                {
+                    ratGen.Remove(cost);
+                    generator.Add(amount);
+                }
+                else Debug.LogError("Not enough profit to buy");
+            }
         }
         else Debug.LogError("Invalid generator ID");
+    }
+
+    public bool CanBuy(string ID, int amount)
+    {
+        if (_generators.TryGetValue(ID, out Generator generator))
+        {
+            BigDouble cost = generator.GetCost(amount);
+
+            if (generator.Type == GeneratorType.Profit || generator.Type == GeneratorType.Generator) // Profit gens and rat gens cost profit
+            {
+                return Profit >= cost;
+            }
+            else if (generator.Type == GeneratorType.Booster) // Booster gens cost rats
+            {
+                Generator ratGen = _generators[_profitGeneratorData.ID];
+                return ratGen.GetCount() >= cost;
+            }
+        }
+
+        Debug.LogError("Invalid generator ID");
+        return false;
     }
 
     internal void CreateClickResource()

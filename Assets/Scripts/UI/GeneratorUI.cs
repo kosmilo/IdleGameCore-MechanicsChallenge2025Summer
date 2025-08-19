@@ -1,8 +1,6 @@
-using System;
 using BreakInfinity;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GeneratorUI : MonoBehaviour
 {
@@ -11,6 +9,7 @@ public class GeneratorUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _CountUGUI;
     [SerializeField] private TextMeshProUGUI _PPSUGUI;
     [SerializeField] private BuyButton[] hireButtons;
+    [SerializeField] private string _productionTitle = "PPS";
 
     private void Start()
     {
@@ -32,12 +31,12 @@ public class GeneratorUI : MonoBehaviour
     {
         Generator generator = ResourceManager.Instance.GetGenerator(_generatorData.ID);
         _CountUGUI.text = _generatorData.GeneratorName + ": " + Utils.FormatNum(generator.GetCount());
-        _PPSUGUI.text = $"PPS: {Utils.FormatNum(generator.GenerationRate, true)} ({Utils.FormatNum(generator.GetSingleUnitGeneration(), true)})";
+        _PPSUGUI.text = $"{_productionTitle}: {Utils.FormatNum(generator.GenerationRate, true)} ({Utils.FormatNum(generator.GetSingleUnitGeneration(), true)})";
 
         foreach (BuyButton buyButton in hireButtons)
         {
             BigDouble cost = generator.GetCost(buyButton.Amount);
-            buyButton.UpdateButton(cost);
+            buyButton.UpdateButton(cost, _generatorData.ID);
         }
     }
 }

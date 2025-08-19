@@ -60,7 +60,7 @@ public class Generator
         CalculateGenerationRate();
     }
 
-    public void Remove(int amount)
+    public void Remove(BigDouble amount)
     {
         if (amount > _count)
         {
