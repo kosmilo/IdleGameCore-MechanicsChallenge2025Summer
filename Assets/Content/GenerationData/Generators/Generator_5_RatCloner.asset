@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 142e153f1af5e3a4c83d9520e1b33d7e, type: 3}
+  m_Name: Generator_5_RatCloner
+  m_EditorClassIdentifier: 
+  <ID>k__BackingField: b46a4e9a-27d9-4204-ae16-58a699f60848
+  <GeneratorName>k__BackingField: Rat Cloner
+  <BaseCost>k__BackingField:
+    mantissa: 3.2
+    exponent: 15
+  <SingleUnitGeneration>k__BackingField: 12000
+  <CostIncreaseExponential>k__BackingField: 1.07
+  <CostIncreaseLinear>k__BackingField: 0
+  <Multipliers>k__BackingField:
+  - RequiredCount:
+      mantissa: 1
+      exponent: 1
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 2.5
+      exponent: 1
+    MultiplierAmount: 2
+  - RequiredCount:
+      mantissa: 5
+      exponent: 1
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 1
+      exponent: 2
+    MultiplierAmount: 2
+  - RequiredCount:
+      mantissa: 2.5
+      exponent: 2
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 5
+      exponent: 2
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 1
+      exponent: 3
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 1
+      exponent: 4
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 1
+      exponent: 5
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 1
+      exponent: 6
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 1
+      exponent: 7
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 1
+      exponent: 8
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 1
+      exponent: 9
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 1
+      exponent: 10
+    MultiplierAmount: 1.5
+  <GenerationTarget>k__BackingField: {fileID: 11400000, guid: ef4d3b4b71647f24fa668f9c3b9ad87f, type: 2}

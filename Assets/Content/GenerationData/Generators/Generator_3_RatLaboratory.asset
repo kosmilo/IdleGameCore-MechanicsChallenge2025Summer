@@ -16,7 +16,7 @@ MonoBehaviour:
   <GeneratorName>k__BackingField: Rat Laboratory
   <BaseCost>k__BackingField:
     mantissa: 1.78
-    exponent: 6
+    exponent: 8
   <SingleUnitGeneration>k__BackingField: 460
   <CostIncreaseExponential>k__BackingField: 1.07
   <CostIncreaseLinear>k__BackingField: 500
@@ -28,7 +28,7 @@ MonoBehaviour:
   - RequiredCount:
       mantissa: 2.5
       exponent: 1
-    MultiplierAmount: 1.5
+    MultiplierAmount: 2
   - RequiredCount:
       mantissa: 5
       exponent: 1
@@ -36,7 +36,7 @@ MonoBehaviour:
   - RequiredCount:
       mantissa: 1
       exponent: 2
-    MultiplierAmount: 1.5
+    MultiplierAmount: 2
   - RequiredCount:
       mantissa: 2.5
       exponent: 2

@@ -17,6 +17,7 @@ public class GeneratorUI : MonoBehaviour
             wrapper.Btn.onClick.AddListener(() =>
             {
                 ResourceManager.Instance.BuyGenerator(_generatorData.ID, wrapper.Amount);
+                SoundManager.Instance.PlayButtonSound();
             });
         }
     }

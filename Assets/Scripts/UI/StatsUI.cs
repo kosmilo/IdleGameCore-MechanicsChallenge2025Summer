@@ -13,7 +13,11 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        _makeProfitBtn.onClick.AddListener(ResourceManager.Instance.CreateClickResource);
+        _makeProfitBtn.onClick.AddListener(() =>
+        {
+            SoundManager.Instance.PlayButtonSound();
+            ResourceManager.Instance.CreateClickResource();
+        });
     }
 
     private void Update()

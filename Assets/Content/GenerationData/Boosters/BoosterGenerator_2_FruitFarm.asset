@@ -18,7 +18,7 @@ MonoBehaviour:
     mantissa: 8
     exponent: 2
   <SingleUnitGeneration>k__BackingField: 0.4
-  <CostIncreaseExponential>k__BackingField: 1.01
+  <CostIncreaseExponential>k__BackingField: 1.08
   <CostIncreaseLinear>k__BackingField: 5
   <Multipliers>k__BackingField:
   - RequiredCount:
@@ -32,11 +32,11 @@ MonoBehaviour:
   - RequiredCount:
       mantissa: 5
       exponent: 1
-    MultiplierAmount: 1.5
+    MultiplierAmount: 2
   - RequiredCount:
       mantissa: 1
       exponent: 2
-    MultiplierAmount: 1.5
+    MultiplierAmount: 2
   - RequiredCount:
       mantissa: 2.5
       exponent: 2
@@ -44,7 +44,7 @@ MonoBehaviour:
   - RequiredCount:
       mantissa: 5
       exponent: 2
-    MultiplierAmount: 1.5
+    MultiplierAmount: 2
   - RequiredCount:
       mantissa: 1
       exponent: 3

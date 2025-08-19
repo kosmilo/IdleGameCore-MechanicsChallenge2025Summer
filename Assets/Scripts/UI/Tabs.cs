@@ -16,7 +16,11 @@ public class Tabs : MonoBehaviour
     {
         foreach (Tab tab in _tabs)
         {
-            tab.TabButton.onClick.AddListener(() => { OpenTab(tab); });
+            tab.TabButton.onClick.AddListener(() =>
+            {
+                SoundManager.Instance.PlayTabSound();
+                OpenTab(tab);
+            });
             tab.TabPanel.SetActive(false);
         }
         _tabs[0].TabPanel.SetActive(true);
