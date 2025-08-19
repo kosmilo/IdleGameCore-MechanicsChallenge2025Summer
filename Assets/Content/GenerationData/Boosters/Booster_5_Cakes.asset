@@ -15,8 +15,8 @@ MonoBehaviour:
   <ID>k__BackingField: 518be586-cefa-491f-9bd2-f54e4fc8410e
   <BoosterName>k__BackingField: Cakes
   <BaseBoost>k__BackingField:
-    mantissa: 1
-    exponent: 2
+    mantissa: 8.4
+    exponent: -1
   <BaseConsumptionRate>k__BackingField:
     mantissa: 1
-    exponent: -8
+    exponent: -14

@@ -5,7 +5,7 @@ using UnityEngine;
 [Serializable]
 public struct Multiplier
 {
-    public int RequiredCount;
+    public BigDouble RequiredCount;
     public float MultiplierAmount;
 }
 

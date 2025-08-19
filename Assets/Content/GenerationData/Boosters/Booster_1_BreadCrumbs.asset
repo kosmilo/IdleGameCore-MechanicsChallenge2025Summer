@@ -19,4 +19,4 @@ MonoBehaviour:
     exponent: -2
   <BaseConsumptionRate>k__BackingField:
     mantissa: 1
-    exponent: -4
+    exponent: -6

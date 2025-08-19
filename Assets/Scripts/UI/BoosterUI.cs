@@ -15,7 +15,7 @@ public class BoosterUI : MonoBehaviour
 
     private void UpdateTextAndButtons()
     {
-        GenerationBooster booster = ResourceManager.Instance.GetBooster(_boosterData.ID);
+        Booster booster = ResourceManager.Instance.GetBooster(_boosterData.ID);
         _countUGUI.text = _boosterData.BoosterName + ": " + Utils.FormatNum(booster.Count);
         _boostUGUI.text = $"Boost: {Utils.FormatNum(booster.GetBoost(), true)} ({Utils.FormatNum(booster.GetBaseBoost(), true)})";
     }

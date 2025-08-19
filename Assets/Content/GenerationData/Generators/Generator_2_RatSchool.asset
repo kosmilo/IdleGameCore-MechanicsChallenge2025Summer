@@ -15,16 +15,66 @@ MonoBehaviour:
   <ID>k__BackingField: 2438c9ed-d3a9-46be-b436-526a8ba1c9aa
   <GeneratorName>k__BackingField: Rat School
   <BaseCost>k__BackingField:
-    mantissa: 7
+    mantissa: 3.2
     exponent: 3
-  <SingleUnitGeneration>k__BackingField: 2
-  <CostIncreaseExponential>k__BackingField: 1.24
-  <CostIncreaseLinear>k__BackingField: 100
+  <SingleUnitGeneration>k__BackingField: 25
+  <CostIncreaseExponential>k__BackingField: 1.07
+  <CostIncreaseLinear>k__BackingField: 50
   <Multipliers>k__BackingField:
-  - RequiredCount: 50
-    MultiplierAmount: 1.2
-  - RequiredCount: 100
-    MultiplierAmount: 1.2
-  - RequiredCount: 250
-    MultiplierAmount: 2
+  - RequiredCount:
+      mantissa: 1
+      exponent: 1
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 2.5
+      exponent: 1
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 5
+      exponent: 1
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 1
+      exponent: 2
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 2.5
+      exponent: 2
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 5
+      exponent: 2
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 1
+      exponent: 3
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 1
+      exponent: 4
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 1
+      exponent: 5
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 1
+      exponent: 6
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 1
+      exponent: 7
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 1
+      exponent: 8
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 1
+      exponent: 9
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 1
+      exponent: 10
+    MultiplierAmount: 1.5
   <GenerationTarget>k__BackingField: {fileID: 11400000, guid: ef4d3b4b71647f24fa668f9c3b9ad87f, type: 2}

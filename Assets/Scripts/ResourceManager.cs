@@ -1,8 +1,10 @@
-using System;
 using System.Collections.Generic;
 using BreakInfinity;
 using UnityEngine;
 
+/// <summary>
+/// Handle boosters, generators and profit. 
+/// </summary>
 public class ResourceManager : MonoBehaviour
 {
     [Header("Generators")]
@@ -21,7 +23,9 @@ public class ResourceManager : MonoBehaviour
     public BigDouble UnboostedRPS { get; private set; }
 
     private Dictionary<string, Generator> _generators = new(); // ID lookup
-    private Dictionary<string, GenerationBooster> _boosters = new();
+    private Dictionary<string, Booster> _boosters = new();
+
+    #region Public Methods
 
     public Generator GetGenerator(string ID)
     {
@@ -32,88 +36,15 @@ public class ResourceManager : MonoBehaviour
         Debug.LogError("Invalid generator ID");
         return null;
     }
-    public GenerationBooster GetBooster(string ID)
+
+    public Booster GetBooster(string ID)
     {
-        if (_boosters.TryGetValue(ID, out GenerationBooster booster))
+        if (_boosters.TryGetValue(ID, out Booster booster))
         {
             return booster;
         }
         Debug.LogError("Invalid booster ID");
         return null;
-    }
-
-    private void Awake()
-    {
-        if (Instance != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-
-        // Create boosters
-        foreach (BoosterDataSO boosterData in _boosterDatas)
-        {
-            GenerationBooster newBooster = new GenerationBooster(boosterData);
-            _boosters.Add(boosterData.ID, newBooster);
-        }
-
-        // Create generators
-        Generator profitGen = new(_profitGeneratorData);
-        _generators.Add(_profitGeneratorData.ID, profitGen);
-
-        foreach (BoosterGeneratorDataSO generatorData in _boosterGeneratorDatas)
-        {
-            Generator newGen = new(generatorData, GeneratorType.Booster, generatorData.GenerationTarget.ID);
-            _generators.Add(generatorData.ID, newGen);
-        }
-        foreach (GeneratorGeneratorDataSO generatorData in _generatorGeneratorDatas)
-        {
-            Generator newGen = new(generatorData, GeneratorType.Generator, generatorData.GenerationTarget.ID);
-            _generators.Add(generatorData.ID, newGen);
-        }
-    }
-
-    public void Update()
-    {
-        // Calculate profit boost
-        BoosterMultiplier = 0;
-        foreach (GenerationBooster booster in _boosters.Values)
-        {
-            BoosterMultiplier += booster.GetBoost();
-        }
-
-        // Handle generation
-        PPS = 0;
-        RPS = 0;
-        UnboostedRPS = 0;
-        foreach (Generator generator in _generators.Values)
-        {
-            switch (generator.Type)
-            {
-                case GeneratorType.Profit:
-                    PPS += generator.GenerationRate * (1 + BoosterMultiplier);
-                    Profit += generator.GenerationRate * (1 + BoosterMultiplier) * Time.deltaTime;
-                    break;
-                case GeneratorType.Booster:
-                    GenerationBooster targetBooster = _boosters[generator.TargetID];
-                    targetBooster.Add(generator.GenerationRate * Time.deltaTime);
-                    break;
-                case GeneratorType.Generator:
-                    UnboostedRPS += generator.GenerationRate;
-                    RPS += generator.GenerationRate * (1 + BoosterMultiplier);
-                    Generator targetGenerator = _generators[generator.TargetID];
-                    targetGenerator.Add(generator.GenerationRate * (1 + BoosterMultiplier) * Time.deltaTime);
-                    break;
-            }
-        }
-
-        // Consume boosters
-        BigDouble profitGeneratorCount = _generators[_profitGeneratorData.ID].GetCount();
-        foreach (GenerationBooster booster in _boosters.Values)
-        {
-            booster.Remove(booster.GetConsumptioRate() * booster.Count * profitGeneratorCount * Time.deltaTime);
-        }
     }
 
     public void BuyGenerator(string ID, int amount)
@@ -129,7 +60,7 @@ public class ResourceManager : MonoBehaviour
                     Profit -= cost;
                     generator.Add(amount);
                 }
-                else Debug.LogError("Not enough profit to buy");
+                else Debug.LogError("Not enough profit gens to buy");
             }
             else if (generator.Type == GeneratorType.Booster) // Booster gens cost rats
             {
@@ -161,13 +92,117 @@ public class ResourceManager : MonoBehaviour
                 return ratGen.GetCount() >= cost;
             }
         }
-
         Debug.LogError("Invalid generator ID");
         return false;
     }
 
-    internal void CreateClickResource()
+    public void CreateClickResource()
     {
-        Profit++;
+        Profit += 1 + BoosterMultiplier;
     }
+
+    #endregion
+    #region Initialization
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+
+        // Make sure boosters and generators exists before anything else
+        CreateBoosters();
+        CreateGenerators();
+    }
+
+    private void CreateBoosters()
+    {
+        foreach (BoosterDataSO boosterData in _boosterDatas)
+        {
+            Booster newBooster = new Booster(boosterData);
+            _boosters.Add(boosterData.ID, newBooster);
+        }
+    }
+
+    private void CreateGenerators()
+    {
+        Generator profitGen = new(_profitGeneratorData);
+        _generators.Add(_profitGeneratorData.ID, profitGen);
+
+        foreach (BoosterGeneratorDataSO generatorData in _boosterGeneratorDatas)
+        {
+            Generator newGen = new(generatorData, GeneratorType.Booster, generatorData.GenerationTarget.ID);
+            _generators.Add(generatorData.ID, newGen);
+        }
+        foreach (GeneratorGeneratorDataSO generatorData in _generatorGeneratorDatas)
+        {
+            Generator newGen = new(generatorData, GeneratorType.Generator, generatorData.GenerationTarget.ID);
+            _generators.Add(generatorData.ID, newGen);
+        }
+    }
+
+    #endregion
+    #region Game Update
+
+    private void Update()
+    {
+        CalculateBoosterMultiplier();
+        HandleGenerators();
+        ConsumeBoosters();
+    }
+
+    private void CalculateBoosterMultiplier()
+    {
+        BoosterMultiplier = 0;
+        foreach (Booster booster in _boosters.Values)
+        {
+            BoosterMultiplier += booster.GetBoost();
+        }
+    }
+
+    private void HandleGenerators()
+    {
+        // Reset so we can update the values
+        PPS = 0;
+        RPS = 0;
+        UnboostedRPS = 0;
+
+        foreach (Generator generator in _generators.Values)
+        {
+            switch (generator.Type)
+            {
+                case GeneratorType.Profit:
+                    BigDouble profitGeneration = generator.GenerationRate * (1 + BoosterMultiplier);
+                    PPS += profitGeneration;
+                    Profit += profitGeneration * Time.deltaTime;
+                    break;
+                case GeneratorType.Booster:
+                    Booster targetBooster = _boosters[generator.TargetID];
+                    targetBooster.Add(generator.GenerationRate * Time.deltaTime);
+                    break;
+                case GeneratorType.Generator:
+                    Generator targetGenerator = _generators[generator.TargetID];
+                    BigDouble generatorGeneration = generator.GenerationRate * (1 + BoosterMultiplier);
+                    UnboostedRPS += generator.GenerationRate;
+                    RPS += generatorGeneration;
+                    targetGenerator.Add(generatorGeneration * Time.deltaTime);
+                    break;
+            }
+        }
+    }
+
+    private void ConsumeBoosters()
+    {
+        BigDouble profitGeneratorCount = _generators[_profitGeneratorData.ID].GetCount();
+        foreach (Booster booster in _boosters.Values)
+        {
+            BigDouble boosterConsumption = booster.GetConsumptioRate() * booster.Count * profitGeneratorCount * Time.deltaTime;
+            booster.Remove(boosterConsumption);
+        }
+    }
+
+    #endregion
 }

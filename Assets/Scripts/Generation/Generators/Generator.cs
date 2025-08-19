@@ -18,8 +18,7 @@ public class Generator
     public BigDouble GenerationMultiplier { get; private set; } = 1;
 
     private BigDouble _count;
-    // Keep index of the next multiplier so we don't check each multiplier for unlock
-    private int _multiplierIndex;
+    private int _multiplierIndex; // Keep index of the next multiplier so we don't check each multiplier for unlock
 
     public Generator(GeneratorDataSO data, GeneratorType type = GeneratorType.Profit, string target = "")
     {
@@ -64,7 +63,6 @@ public class Generator
     {
         if (amount > _count)
         {
-            // We should probably throw an error here...
             _count = 0;
             CalculateGenerationRate();
             return;

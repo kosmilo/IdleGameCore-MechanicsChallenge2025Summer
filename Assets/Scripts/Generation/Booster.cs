@@ -1,6 +1,6 @@
 using BreakInfinity;
 
-public class GenerationBooster
+public class Booster
 {
     public BoosterDataSO Data { get; private set; }
     public BigDouble Count { get; private set; } = 0;
@@ -9,7 +9,7 @@ public class GenerationBooster
     public BigDouble GetBaseBoost() => Data.BaseBoost;
     public BigDouble GetConsumptioRate() => Data.BaseConsumptionRate;
 
-    public GenerationBooster(BoosterDataSO data)
+    public Booster(BoosterDataSO data)
     {
         Data = data;
     }

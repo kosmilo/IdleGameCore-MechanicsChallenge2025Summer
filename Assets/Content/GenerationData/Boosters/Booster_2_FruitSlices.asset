@@ -15,8 +15,8 @@ MonoBehaviour:
   <ID>k__BackingField: f5bb285c-525e-4a31-95a9-6a59320e8ef7
   <BoosterName>k__BackingField: Fruit Slices
   <BaseBoost>k__BackingField:
-    mantissa: 1
-    exponent: -1
+    mantissa: 4
+    exponent: -2
   <BaseConsumptionRate>k__BackingField:
     mantissa: 1
-    exponent: -5
+    exponent: -8

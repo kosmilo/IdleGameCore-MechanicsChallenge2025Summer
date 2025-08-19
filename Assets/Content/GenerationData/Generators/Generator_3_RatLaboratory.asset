@@ -17,14 +17,64 @@ MonoBehaviour:
   <BaseCost>k__BackingField:
     mantissa: 1.78
     exponent: 6
-  <SingleUnitGeneration>k__BackingField: 15
-  <CostIncreaseExponential>k__BackingField: 1.22
+  <SingleUnitGeneration>k__BackingField: 460
+  <CostIncreaseExponential>k__BackingField: 1.07
   <CostIncreaseLinear>k__BackingField: 500
   <Multipliers>k__BackingField:
-  - RequiredCount: 50
-    MultiplierAmount: 1.2
-  - RequiredCount: 100
-    MultiplierAmount: 1.2
-  - RequiredCount: 250
-    MultiplierAmount: 2
+  - RequiredCount:
+      mantissa: 1
+      exponent: 1
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 2.5
+      exponent: 1
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 5
+      exponent: 1
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 1
+      exponent: 2
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 2.5
+      exponent: 2
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 5
+      exponent: 2
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 1
+      exponent: 3
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 1
+      exponent: 4
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 1
+      exponent: 5
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 1
+      exponent: 6
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 1
+      exponent: 7
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 1
+      exponent: 8
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 1
+      exponent: 9
+    MultiplierAmount: 1.5
+  - RequiredCount:
+      mantissa: 1
+      exponent: 10
+    MultiplierAmount: 1.5
   <GenerationTarget>k__BackingField: {fileID: 11400000, guid: ef4d3b4b71647f24fa668f9c3b9ad87f, type: 2}
