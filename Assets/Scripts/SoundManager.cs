@@ -23,11 +23,13 @@ public class SoundManager : MonoBehaviour
 
     public void PlayButtonSound()
     {
+        if (_sfxSource.isPlaying) _sfxSource.Stop();
         _sfxSource.PlayOneShot(_buttonSound);
     }
 
     public void PlayTabSound()
     {
+        if (_sfxSource.isPlaying) _sfxSource.Stop();
         _sfxSource.PlayOneShot(_tabSound);
     }
 }

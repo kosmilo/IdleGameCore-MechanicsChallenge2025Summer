@@ -18,12 +18,13 @@ public class ResourceManager : MonoBehaviour
     public static ResourceManager Instance { get; private set; }
     public BigDouble Profit { get; private set; }
     public BigDouble BoosterMultiplier { get; private set; }
+    private Dictionary<string, Generator> _generators = new(); // ID lookup
+    private Dictionary<string, Booster> _boosters = new();
+
+    // For UI
     public BigDouble PPS { get; private set; } // Profit per second
     public BigDouble RPS { get; private set; } // Rats per second
     public BigDouble UnboostedRPS { get; private set; }
-
-    private Dictionary<string, Generator> _generators = new(); // ID lookup
-    private Dictionary<string, Booster> _boosters = new();
 
     #region Public Methods
 
@@ -102,7 +103,7 @@ public class ResourceManager : MonoBehaviour
     }
 
     #endregion
-    #region Initialization
+    #region Initialization & Reset
 
     private void Awake()
     {
@@ -120,6 +121,7 @@ public class ResourceManager : MonoBehaviour
 
     private void CreateBoosters()
     {
+        _boosters.Clear();
         foreach (BoosterDataSO boosterData in _boosterDatas)
         {
             Booster newBooster = new Booster(boosterData);
@@ -129,6 +131,7 @@ public class ResourceManager : MonoBehaviour
 
     private void CreateGenerators()
     {
+        _generators.Clear();
         Generator profitGen = new(_profitGeneratorData);
         _generators.Add(_profitGeneratorData.ID, profitGen);
 
@@ -142,6 +145,15 @@ public class ResourceManager : MonoBehaviour
             Generator newGen = new(generatorData, GeneratorType.Generator, generatorData.GenerationTarget.ID);
             _generators.Add(generatorData.ID, newGen);
         }
+    }
+
+    public void ResetGameResources()
+    {
+        Profit = 0;
+        BoosterMultiplier = 0;
+
+        CreateBoosters();
+        CreateGenerators();
     }
 
     #endregion
