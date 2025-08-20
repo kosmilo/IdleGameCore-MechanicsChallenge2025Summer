@@ -15,7 +15,7 @@ MonoBehaviour:
   <ID>k__BackingField: fb53e55a-a2c1-4dd4-a6de-2b871c4498b4
   <BoosterName>k__BackingField: Cheese
   <BaseBoost>k__BackingField:
-    mantissa: 8
+    mantissa: 3
     exponent: -2
   <BaseConsumptionRate>k__BackingField:
     mantissa: 1

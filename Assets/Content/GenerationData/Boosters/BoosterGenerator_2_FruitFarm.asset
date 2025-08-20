@@ -17,7 +17,7 @@ MonoBehaviour:
   <BaseCost>k__BackingField:
     mantissa: 8
     exponent: 2
-  <SingleUnitGeneration>k__BackingField: 0.4
+  <SingleUnitGeneration>k__BackingField: 0.2
   <CostIncreaseExponential>k__BackingField: 1.08
   <CostIncreaseLinear>k__BackingField: 5
   <Multipliers>k__BackingField:

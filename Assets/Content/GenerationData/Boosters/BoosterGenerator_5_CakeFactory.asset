@@ -15,9 +15,9 @@ MonoBehaviour:
   <ID>k__BackingField: 2d1fcf06-0e11-4a5b-9606-b833821a50dd
   <GeneratorName>k__BackingField: Cake Factory
   <BaseCost>k__BackingField:
-    mantissa: 8
+    mantissa: 1.5
     exponent: 12
-  <SingleUnitGeneration>k__BackingField: 2
+  <SingleUnitGeneration>k__BackingField: 4
   <CostIncreaseExponential>k__BackingField: 1.08
   <CostIncreaseLinear>k__BackingField: 5
   <Multipliers>k__BackingField:

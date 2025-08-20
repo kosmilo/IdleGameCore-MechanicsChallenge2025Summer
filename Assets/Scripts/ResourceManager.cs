@@ -147,7 +147,17 @@ public class ResourceManager : MonoBehaviour
         }
     }
 
-    public void ResetGameResources()
+    public void GiveUpRun()
+    {
+        ScreenFade.Instance.StartScreenFaidOut(1, () =>
+        {
+            Debug.Log("Resetting game");
+            ResetGameResources();
+            ScreenFade.Instance.StartScreenFaidIn(1);
+        });
+    }
+
+    private void ResetGameResources()
     {
         Profit = 0;
         BoosterMultiplier = 0;

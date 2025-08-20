@@ -10,7 +10,7 @@ public class SettingsUI : MonoBehaviour
         _restartButton.onClick.AddListener(() =>
         {
             SoundManager.Instance.PlayButtonSound();
-            ResourceManager.Instance.ResetGameResources();
+            ResourceManager.Instance.GiveUpRun();
         });
     }
 }

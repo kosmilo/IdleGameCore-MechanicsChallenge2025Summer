@@ -15,8 +15,8 @@ MonoBehaviour:
   <ID>k__BackingField: 7ef68246-b6fe-47cc-8a95-2f29ca4add14
   <BoosterName>k__BackingField: Pies
   <BaseBoost>k__BackingField:
-    mantissa: 3.14
-    exponent: -1
+    mantissa: 4
+    exponent: -2
   <BaseConsumptionRate>k__BackingField:
     mantissa: 1
     exponent: -12
