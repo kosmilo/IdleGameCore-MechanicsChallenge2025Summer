@@ -68,6 +68,7 @@ public class Generator
             return;
         }
         _count -= amount;
+        _count.Round(); // Avoid floating points
         CalculateGenerationRate();
     }
 

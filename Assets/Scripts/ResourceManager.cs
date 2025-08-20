@@ -151,8 +151,8 @@ public class ResourceManager : MonoBehaviour
     {
         ScreenFade.Instance.StartScreenFaidOut(1, () =>
         {
-            Debug.Log("Resetting game");
             ResetGameResources();
+            GameEventManager.Instance.ResetEventData();
             ScreenFade.Instance.StartScreenFaidIn(1);
         });
     }
