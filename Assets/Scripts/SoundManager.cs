@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour
@@ -8,6 +9,7 @@ public class SoundManager : MonoBehaviour
 
     [Header("Component references")]
     [SerializeField] private AudioSource _sfxSource;
+    [SerializeField] private AudioSource _musicSource;
 
     public static SoundManager Instance { get; private set; }
 
@@ -31,5 +33,15 @@ public class SoundManager : MonoBehaviour
     {
         if (_sfxSource.isPlaying) _sfxSource.Stop();
         _sfxSource.PlayOneShot(_tabSound);
+    }
+
+    internal void ToggleSFX(bool on)
+    {
+        _sfxSource.volume = on ? 1 : 0;
+    }
+
+    internal void ToggleMusic(bool on)
+    {
+        _musicSource.volume = on ? 0.05f : 0;
     }
 }

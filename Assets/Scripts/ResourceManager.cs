@@ -169,7 +169,7 @@ public class ResourceManager : MonoBehaviour
     private void Start()
     {
         LoadGame();
-        InvokeRepeating(nameof(SaveGame), 120, 120);
+        InvokeRepeating(nameof(SaveGame), 120, 120); // Sace every 2 minutes
     }
 
     private void CreateBoosters()
