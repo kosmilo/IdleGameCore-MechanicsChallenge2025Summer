@@ -65,7 +65,6 @@ public class GeneratorUI : MonoBehaviour
 
     private void ShowUI()
     {
-        Debug.Log("UI shown");
         _isHidden = false;
         _canvasGroup.alpha = 1;
         _canvasGroup.interactable = true;
@@ -73,7 +72,6 @@ public class GeneratorUI : MonoBehaviour
 
     private void HideUI()
     {
-        Debug.Log("UI hidden");
         _isHidden = true;
         _canvasGroup.alpha = 0;
         _canvasGroup.interactable = false;

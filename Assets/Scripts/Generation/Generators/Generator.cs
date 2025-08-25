@@ -17,15 +17,22 @@ public class Generator
 
     public BigDouble GenerationRate { get; private set; } // Per second
     public BigDouble GenerationMultiplier { get; private set; } = 1;
+    public int MultiplierIndex { get; private set; } // Keep index of the next multiplier so we don't check each multiplier for unlock
 
     private BigDouble _count;
-    private int _multiplierIndex; // Keep index of the next multiplier so we don't check each multiplier for unlock
 
     public Generator(GeneratorDataSO data, GeneratorType type = GeneratorType.Profit, string target = "")
     {
         Data = data;
         Type = type;
         TargetID = target;
+    }
+
+    public void SetValues(BigDouble count, int multiplierIndex)
+    {
+        _count = count;
+        for (int i = 0; i < multiplierIndex; i++) AddMultipliers();
+        CalculateGenerationRate();
     }
 
     public BigDouble GetCount() => _count.Round();
@@ -78,12 +85,12 @@ public class Generator
 
     private void AddMultipliers()
     {
-        if (Data.Multipliers == null || _multiplierIndex >= Data.Multipliers.Count()) return;
+        if (Data.Multipliers == null || MultiplierIndex >= Data.Multipliers.Count()) return;
 
-        if (_count >= Data.Multipliers[_multiplierIndex].RequiredCount)
+        if (_count >= Data.Multipliers[MultiplierIndex].RequiredCount)
         {
-            GenerationMultiplier *= Data.Multipliers[_multiplierIndex].MultiplierAmount;
-            _multiplierIndex++;
+            GenerationMultiplier *= Data.Multipliers[MultiplierIndex].MultiplierAmount;
+            MultiplierIndex++;
         }
     }
 }

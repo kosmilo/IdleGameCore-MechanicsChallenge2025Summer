@@ -1,7 +1,15 @@
+using System;
 using BreakInfinity;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+
+public enum EventStatus
+{
+    Waiting,
+    InProgress,
+    Completed
+}
 
 public class GameEventManager : MonoBehaviour
 {
@@ -18,14 +26,8 @@ public class GameEventManager : MonoBehaviour
     public static GameEventManager Instance;
 
     private Generator _ratsRef;
-    public enum EventStatus
-    {
-        Waiting,
-        InProgress,
-        Completed
-    }
-    private EventStatus _ratRevolutionStatus;
-    private int _ratRevolutionPhase;
+    public EventStatus RatRevolutionStatus { get; private set; }
+    public int RatRevolutionPhase { get; private set; }
     private string _ratsOnStrikeText;
 
     private void Awake()
@@ -50,53 +52,53 @@ public class GameEventManager : MonoBehaviour
         if (_ratGeneratorData == null) return;
 
         // Handle event checks
-        if (_ratRevolutionStatus == EventStatus.Waiting)
+        if (RatRevolutionStatus == EventStatus.Waiting)
         {
             if (_ratsRef.GetCount() > 100 && ResourceManager.Instance.Profit > _minProfitToRevolution)
             {
                 StartRatRevolutionEvent();
             }
         }
-        else if (_ratRevolutionStatus == EventStatus.InProgress)
+        else if (RatRevolutionStatus == EventStatus.InProgress)
         {
             _ratsOnStrikeUGUI.text = _ratsOnStrikeText + ResourceManager.Instance.GetRatsOnStrike();
 
             // Check if revolution phase will be changed
-            if (_ratsRef.GetCount() > _minRatsToProgressRevolution && ResourceManager.Instance.Profit > _minProfitToRevolution * BigDouble.Pow(10, _ratRevolutionPhase * 2))
+            if (_ratsRef.GetCount() > _minRatsToProgressRevolution && ResourceManager.Instance.Profit > _minProfitToRevolution * BigDouble.Pow(10, RatRevolutionPhase * 2))
             {
-                switch (_ratRevolutionPhase)
+                switch (RatRevolutionPhase)
                 {
                     case 1:
-                        _ratRevolutionPhase++;
+                        RatRevolutionPhase++;
                         ResourceManager.Instance.SetQuitRate(0.04f);
-                        Debug.Log("Entering revolution phase: " + _ratRevolutionPhase);
+                        Debug.Log("Entering revolution phase: " + RatRevolutionPhase);
                         break;
                     case 2:
-                        _ratRevolutionPhase++;
+                        RatRevolutionPhase++;
                         ResourceManager.Instance.SetQuitRate(0.06f);
-                        Debug.Log("Entering revolution phase: " + _ratRevolutionPhase);
+                        Debug.Log("Entering revolution phase: " + RatRevolutionPhase);
                         break;
                     case 3:
-                        _ratRevolutionPhase++;
+                        RatRevolutionPhase++;
                         ResourceManager.Instance.SetQuitRate(0.08f);
-                        Debug.Log("Entering revolution phase: " + _ratRevolutionPhase);
+                        Debug.Log("Entering revolution phase: " + RatRevolutionPhase);
                         break;
                     case 4:
-                        _ratRevolutionPhase++;
+                        RatRevolutionPhase++;
                         ResourceManager.Instance.SetQuitRate(0.1f);
                         _ratsOnStrikeText = "Defective rats: ";
-                        Debug.Log("Entering revolution phase: " + _ratRevolutionPhase);
+                        Debug.Log("Entering revolution phase: " + RatRevolutionPhase);
                         break;
                     case 5:
                         ResourceManager.Instance.SetQuitRate(0.12f);
                         _becomeRatKingButton.gameObject.SetActive(true);
-                        _becomeRatKingCostUGUI.text = Utils.FormatNum(_minProfitToRevolution * BigDouble.Pow(10, _ratRevolutionPhase));
+                        _becomeRatKingCostUGUI.text = Utils.FormatNum(_minProfitToRevolution * BigDouble.Pow(10, RatRevolutionPhase));
                         break;
                 }
             }
-            if (_ratRevolutionPhase == 5)
+            if (RatRevolutionPhase == 5)
             {
-                _becomeRatKingButton.interactable = ResourceManager.Instance.Profit >= _minProfitToRevolution * BigDouble.Pow(10, _ratRevolutionPhase);
+                _becomeRatKingButton.interactable = ResourceManager.Instance.Profit >= _minProfitToRevolution * BigDouble.Pow(10, RatRevolutionPhase);
             }
 
         }
@@ -106,7 +108,7 @@ public class GameEventManager : MonoBehaviour
     {
         _gameEndCanvas.SetActive(false);
         _ratsRef = ResourceManager.Instance.GetGenerator(_ratGeneratorData.ID);
-        _ratRevolutionStatus = EventStatus.Waiting;
+        RatRevolutionStatus = EventStatus.Waiting;
         _ratsOnStrikeUGUI.gameObject.SetActive(false);
         _becomeRatKingButton.gameObject.SetActive(false);
         ResourceManager.Instance.SetQuitRate(0f);
@@ -115,9 +117,9 @@ public class GameEventManager : MonoBehaviour
 
     public void StartRatRevolutionEvent()
     {
-        _ratRevolutionStatus = EventStatus.InProgress;
+        RatRevolutionStatus = EventStatus.InProgress;
         _ratsOnStrikeUGUI.gameObject.SetActive(true);
-        _ratRevolutionPhase = 1;
+        RatRevolutionPhase = 1;
         _ratsOnStrikeText = "Rats on strike: ";
         ResourceManager.Instance.SetQuitRate(0.005f);
         Debug.Log("Event rat revolution started");
@@ -125,7 +127,7 @@ public class GameEventManager : MonoBehaviour
 
     public void EndRatRevolutionEvent()
     {
-        _ratRevolutionStatus = EventStatus.Completed;
+        RatRevolutionStatus = EventStatus.Completed;
         _ratsOnStrikeUGUI.gameObject.SetActive(false);
         ResourceManager.Instance.SetQuitRate(0f);
         Debug.Log("Event rat revolution completed");
@@ -138,5 +140,53 @@ public class GameEventManager : MonoBehaviour
         {
             _gameEndCanvas.SetActive(true);
         });
+    }
+
+    public void SetEventData(EventStatus revolutionStatus, int revolutionPhase)
+    {
+        RatRevolutionStatus = revolutionStatus;
+
+        switch (revolutionStatus)
+        {
+            case EventStatus.Waiting:
+                break;
+            case EventStatus.InProgress:
+                _ratsOnStrikeUGUI.gameObject.SetActive(true);
+                RatRevolutionPhase = revolutionPhase;
+
+                switch (RatRevolutionPhase)
+                {
+                    case 1:
+                        RatRevolutionPhase++;
+                        ResourceManager.Instance.SetQuitRate(0.04f);
+                        Debug.Log("Entering revolution phase: " + RatRevolutionPhase);
+                        break;
+                    case 2:
+                        RatRevolutionPhase++;
+                        ResourceManager.Instance.SetQuitRate(0.06f);
+                        Debug.Log("Entering revolution phase: " + RatRevolutionPhase);
+                        break;
+                    case 3:
+                        RatRevolutionPhase++;
+                        ResourceManager.Instance.SetQuitRate(0.08f);
+                        Debug.Log("Entering revolution phase: " + RatRevolutionPhase);
+                        break;
+                    case 4:
+                        RatRevolutionPhase++;
+                        ResourceManager.Instance.SetQuitRate(0.1f);
+                        _ratsOnStrikeText = "Defective rats: ";
+                        Debug.Log("Entering revolution phase: " + RatRevolutionPhase);
+                        break;
+                    case 5:
+                        ResourceManager.Instance.SetQuitRate(0.12f);
+                        _becomeRatKingButton.gameObject.SetActive(true);
+                        _becomeRatKingCostUGUI.text = Utils.FormatNum(_minProfitToRevolution * BigDouble.Pow(10, RatRevolutionPhase));
+                        break;
+                }
+                break;
+            case EventStatus.Completed:
+                EndRatRevolutionEvent();
+                break;
+        }
     }
 }

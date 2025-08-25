@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using BreakInfinity;
 using UnityEngine;
 
@@ -161,6 +162,12 @@ public class ResourceManager : MonoBehaviour
         CreateGenerators();
     }
 
+    private void Start()
+    {
+        LoadGame();
+        InvokeRepeating(nameof(SaveGame), 60, 60);
+    }
+
     private void CreateBoosters()
     {
         _boosters.Clear();
@@ -268,6 +275,7 @@ public class ResourceManager : MonoBehaviour
         UnboostedRPS = 0;
         _ratReturnRate = 0;
 
+        // Calculate generation for each generator
         foreach (Generator generator in _generators.Values)
         {
             switch (generator.Type)
@@ -323,6 +331,71 @@ public class ResourceManager : MonoBehaviour
             BigDouble boosterConsumption = booster.GetConsumptioRate() * booster.Count * profitGeneratorCount * Time.deltaTime;
             booster.Remove(boosterConsumption);
         }
+    }
+
+    #endregion
+
+    #region Save & load
+
+    public void SaveGame()
+    {
+        GameSaveData saveData = new(
+            _generators, _boosters, _revolutionCounters,
+            Profit, PrestiegeGenerationBoost, _ratsOnStrike,
+            GameEventManager.Instance.RatRevolutionStatus, GameEventManager.Instance.RatRevolutionPhase);
+        Debug.Log(saveData.GetJson());
+
+        using (StreamWriter writer = new StreamWriter(Application.persistentDataPath + Path.AltDirectorySeparatorChar + "SaveData.json"))
+        {
+            writer.Write(saveData.GetJson());
+        }
+        Debug.Log("Game saved");
+    }
+
+    public bool LoadGame()
+    {
+        if (
+            Application.platform == RuntimePlatform.WebGLPlayer ||
+            !File.Exists(Application.persistentDataPath + Path.AltDirectorySeparatorChar + "SaveData.json"))
+        {
+            return false;
+        }
+
+        string saveJson = "";
+
+        using (StreamReader reader = new StreamReader(Application.persistentDataPath + Path.AltDirectorySeparatorChar + "SaveData.json"))
+        {
+            saveJson = reader.ReadToEnd();
+        }
+
+        GameSaveData saveData = JsonUtility.FromJson<GameSaveData>(saveJson);
+        Debug.Log("Save data loaded");
+
+        Profit = saveData.Profit;
+        PrestiegeGenerationBoost = saveData.PrestiegeGenerationBoost;
+        _ratsOnStrike = saveData.RatsOnStrike;
+
+        // Set generator, booster and revolution counter values
+        foreach (GeneratorSave generatorSave in saveData.Generators)
+        {
+            Generator target = _generators[generatorSave.ID];
+            target.SetValues(generatorSave.Count, generatorSave.MultiplierIndex);
+        }
+        foreach (BoosterSave boosterSave in saveData.Boosters)
+        {
+            Booster target = _boosters[boosterSave.ID];
+            target.SetValues(boosterSave.Count);
+        }
+        foreach (RevolutionCounterSave counterSave in saveData.RevolutionCounters)
+        {
+            RevolutionCounter target = _revolutionCounters[counterSave.ID];
+            target.SetValues(counterSave.Count);
+        }
+
+        // Set event data
+        GameEventManager.Instance.SetEventData(saveData.RevolutionStatus, saveData.RevolutionPhase);
+
+        return true;
     }
 
     #endregion

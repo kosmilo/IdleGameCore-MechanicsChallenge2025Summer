@@ -13,6 +13,8 @@ public class RevolutionCounter
         Data = data;
     }
 
+    public void SetValues(BigDouble count) => Count = count;
+
     public void Add(BigDouble amount)
     {
         Count += amount;
