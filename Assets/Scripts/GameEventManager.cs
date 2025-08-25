@@ -94,11 +94,12 @@ public class GameEventManager : MonoBehaviour
                         RatRevolutionPhase++;
                         ResourceManager.Instance.SetQuitRate(0.1f);
                         _ratsOnStrikeText = "Defective rats: ";
-                        _eventInfoUGUI.text = "Rat usion is stealing your profits.";
+                        _eventInfoUGUI.text = "Rat union is stealing your profits.";
                         Debug.Log("Entering revolution phase: " + RatRevolutionPhase);
                         break;
                     case 5:
                         ResourceManager.Instance.SetQuitRate(0.12f);
+                        _eventInfoUGUI.text = "You should rule them all.";
                         _becomeRatKingButton.gameObject.SetActive(true);
                         _becomeRatKingCostUGUI.text = Utils.FormatNum(_minProfitToRevolution * BigDouble.Pow(10, RatRevolutionPhase));
                         break;
