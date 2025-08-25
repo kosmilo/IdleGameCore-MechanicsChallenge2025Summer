@@ -27,7 +27,8 @@ public struct RevolutionCounterSave
 
 public class GameSaveData
 {
-    public BigDouble Profit;
+    public BigDouble CurrentProfit;
+    public BigDouble LifetimeProfit;
     public BigDouble PrestiegeGenerationBoost;
     public BigDouble RatsOnStrike;
     public EventStatus RevolutionStatus;
@@ -42,6 +43,7 @@ public class GameSaveData
         Dictionary<string, Booster> boosters,
         Dictionary<string, RevolutionCounter> revolutionCounters,
         BigDouble profit,
+        BigDouble lifetimeProfit,
         BigDouble prestiegeGenerationBoost,
         BigDouble ratsOnStrike,
         EventStatus revolutionStatus,
@@ -75,7 +77,8 @@ public class GameSaveData
                 Count = revolutionCounter.Count
             });
         }
-        Profit = profit;
+        CurrentProfit = profit;
+        LifetimeProfit = lifetimeProfit;
         PrestiegeGenerationBoost = prestiegeGenerationBoost;
         RatsOnStrike = ratsOnStrike;
         RevolutionStatus = revolutionStatus;

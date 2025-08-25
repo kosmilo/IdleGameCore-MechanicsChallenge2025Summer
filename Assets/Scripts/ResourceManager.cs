@@ -21,6 +21,7 @@ public class ResourceManager : MonoBehaviour
 
     public static ResourceManager Instance { get; private set; }
     public BigDouble Profit { get; private set; }
+    public BigDouble LifetimeProfit { get; private set; }
     public BigDouble BoosterMultiplier { get; private set; }
     public BigDouble PrestiegeGenerationBoost { get; private set; }
     public float QuitRate { get; private set; } = 0;
@@ -42,7 +43,10 @@ public class ResourceManager : MonoBehaviour
 
     public BigDouble GetRatsOnStrike() => _ratsOnStrike.Round();
     public BigDouble GetRats() => _generators[_profitGeneratorData.ID].GetCount();
-    public BigDouble GetNextPrestiegeBoost() => BigDouble.Max(0.1 * (_generators[_profitGeneratorData.ID].GetCount() - 10000) / 100000, 0);
+    public BigDouble GetNextPrestiegeBoost()
+    {
+        return BigDouble.Cbrt((LifetimeProfit) / BigDouble.Pow(10, 8)) - PrestiegeGenerationBoost;
+    }
 
     public Generator GetGenerator(string ID)
     {
@@ -125,7 +129,7 @@ public class ResourceManager : MonoBehaviour
 
     public void CreateClickResource()
     {
-        Profit += 1 + BoosterMultiplier;
+        Profit += (1 + BoosterMultiplier) * (1 + PrestiegeGenerationBoost);
     }
 
     public void SetQuitRate(float newRate)
@@ -281,9 +285,11 @@ public class ResourceManager : MonoBehaviour
             switch (generator.Type)
             {
                 case GeneratorType.Profit:
-                    BigDouble profitGeneration = generator.GenerationRate * (1 + BoosterMultiplier);
+                    BigDouble profitGeneration = generator.GenerationRate * (1 + BoosterMultiplier) * (1 + PrestiegeGenerationBoost);
                     PPS += profitGeneration;
-                    Profit += profitGeneration * Time.deltaTime;
+                    BigDouble generatedProfit = profitGeneration * Time.deltaTime;
+                    Profit += generatedProfit;
+                    LifetimeProfit += generatedProfit;
                     break;
                 case GeneratorType.Booster:
                     Booster targetBooster = _boosters[generator.TargetID];
@@ -300,7 +306,7 @@ public class ResourceManager : MonoBehaviour
                     break;
                 case GeneratorType.Generator:
                     Generator targetGenerator = _generators[generator.TargetID];
-                    BigDouble generatorGeneration = generator.GenerationRate * (1 + BoosterMultiplier);
+                    BigDouble generatorGeneration = generator.GenerationRate * (1 + BoosterMultiplier) * (1 + PrestiegeGenerationBoost);
                     UnboostedRPS += generator.GenerationRate;
                     RPS += generatorGeneration;
                     targetGenerator.Add(generatorGeneration * Time.deltaTime);
@@ -341,7 +347,7 @@ public class ResourceManager : MonoBehaviour
     {
         GameSaveData saveData = new(
             _generators, _boosters, _revolutionCounters,
-            Profit, PrestiegeGenerationBoost, _ratsOnStrike,
+            Profit, LifetimeProfit, PrestiegeGenerationBoost, _ratsOnStrike,
             GameEventManager.Instance.RatRevolutionStatus, GameEventManager.Instance.RatRevolutionPhase);
         Debug.Log(saveData.GetJson());
 
@@ -371,7 +377,8 @@ public class ResourceManager : MonoBehaviour
         GameSaveData saveData = JsonUtility.FromJson<GameSaveData>(saveJson);
         Debug.Log("Save data loaded");
 
-        Profit = saveData.Profit;
+        Profit = saveData.CurrentProfit;
+        LifetimeProfit = saveData.LifetimeProfit;
         PrestiegeGenerationBoost = saveData.PrestiegeGenerationBoost;
         _ratsOnStrike = saveData.RatsOnStrike;
 

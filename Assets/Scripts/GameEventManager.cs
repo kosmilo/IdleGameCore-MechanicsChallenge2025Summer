@@ -68,7 +68,7 @@ public class GameEventManager : MonoBehaviour
             _ratsOnStrikeUGUI.text = _ratsOnStrikeText + ResourceManager.Instance.GetRatsOnStrike();
 
             // Check if revolution phase will be changed
-            if (_ratsRef.GetCount() > _minRatsToProgressRevolution && ResourceManager.Instance.Profit > _minProfitToRevolution * BigDouble.Pow(10, RatRevolutionPhase * 2))
+            if (_ratsRef.GetCount() > _minRatsToProgressRevolution && ResourceManager.Instance.Profit > _minProfitToRevolution * BigDouble.Pow(10, RatRevolutionPhase * 4))
             {
                 switch (RatRevolutionPhase)
                 {
