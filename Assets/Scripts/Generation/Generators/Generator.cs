@@ -5,7 +5,8 @@ public enum GeneratorType
 {
     Profit,
     Booster,
-    Generator
+    Generator,
+    RevolutionCounter
 }
 
 public class Generator
@@ -29,7 +30,7 @@ public class Generator
 
     public BigDouble GetCount() => _count.Round();
 
-    public BigDouble GetSingleUnitGeneration() => Data.SingleUnitGeneration * GenerationMultiplier;
+    public BigDouble GetSingleUnitGeneration() => (Data.SingleUnitGeneration + ResourceManager.Instance.PrestiegeGenerationBoost) * GenerationMultiplier;
 
     /// <summary>
     /// Calculate cost of single purchase.
@@ -54,7 +55,6 @@ public class Generator
     public void Add(BigDouble amount)
     {
         _count += amount;
-        _count.Round(); // Avoid floating points
         AddMultipliers();
         CalculateGenerationRate();
     }
@@ -68,13 +68,12 @@ public class Generator
             return;
         }
         _count -= amount;
-        _count.Round(); // Avoid floating points
         CalculateGenerationRate();
     }
 
     private void CalculateGenerationRate()
     {
-        GenerationRate = Data.SingleUnitGeneration * _count.Round() * GenerationMultiplier;
+        GenerationRate = (Data.SingleUnitGeneration + ResourceManager.Instance.PrestiegeGenerationBoost) * _count.Round() * GenerationMultiplier;
     }
 
     private void AddMultipliers()

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff15e9e69c746d747bada18591b01dda, type: 3}
+  m_Name: RevolutionGenerator_DogTrainer
+  m_EditorClassIdentifier: 
+  <ID>k__BackingField: ac46d3cc-786b-4a41-81b3-4043ebbf9cc4
+  <GeneratorName>k__BackingField: Dog Trainer
+  <BaseCost>k__BackingField:
+    mantissa: 1.4
+    exponent: 8
+  <SingleUnitGeneration>k__BackingField: 0.2
+  <CostIncreaseExponential>k__BackingField: 1.14
+  <CostIncreaseLinear>k__BackingField: 50
+  <Multipliers>k__BackingField: []
+  <GenerationTarget>k__BackingField: {fileID: 11400000, guid: 0b514d6d4c3988b4db599da0a5f0b92a, type: 2}

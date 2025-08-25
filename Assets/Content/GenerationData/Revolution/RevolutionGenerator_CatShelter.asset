@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff15e9e69c746d747bada18591b01dda, type: 3}
+  m_Name: RevolutionGenerator_CatShelter
+  m_EditorClassIdentifier: 
+  <ID>k__BackingField: 0575f347-c5dd-49c5-b380-1c746d94d721
+  <GeneratorName>k__BackingField: Cat Shelter
+  <BaseCost>k__BackingField:
+    mantissa: 6
+    exponent: 4
+  <SingleUnitGeneration>k__BackingField: 0.5
+  <CostIncreaseExponential>k__BackingField: 1.12
+  <CostIncreaseLinear>k__BackingField: 24
+  <Multipliers>k__BackingField: []
+  <GenerationTarget>k__BackingField: {fileID: 11400000, guid: 6958808004424834c8e178dcd22f9c90, type: 2}

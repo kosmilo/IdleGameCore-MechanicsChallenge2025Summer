@@ -4,7 +4,11 @@ public static class Utils
 {
     public static string FormatNum(BigDouble num, bool canFloat = false)
     {
-        if (num < 100 && canFloat)
+        if (num < 0.01 && num != 0 && canFloat)
+        {
+            return num.ToString("F5");
+        }
+        else if (num < 100 && canFloat)
         {
             return num.ToString("F2");
         }
