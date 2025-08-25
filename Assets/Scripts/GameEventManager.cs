@@ -42,6 +42,7 @@ public class GameEventManager : MonoBehaviour
     {
         ResetEventData();
         _becomeRatKingButton.onClick.AddListener(EndGame);
+        ResourceManager.Instance.OnGameSoftReset += ResetEventData;
     }
 
     private void Update()

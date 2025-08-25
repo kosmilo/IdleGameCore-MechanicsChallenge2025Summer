@@ -2867,6 +2867,7 @@ MonoBehaviour:
   _generatorData: {fileID: 11400000, guid: e18c1a1c171e2d44dbd8634716f0c76a, type: 2}
   _countUGUI: {fileID: 926605384646945273}
   _PPSUGUI: {fileID: 646142412310714831}
+  _canvasGroup: {fileID: 6707953956277031287}
   _hireButtons:
   - {fileID: 5083163556449203719}
   - {fileID: 7475594534375978496}
@@ -2874,6 +2875,7 @@ MonoBehaviour:
   - {fileID: 3657136163689204237}
   - {fileID: 4332701611240420106}
   _productionTitle: CPS
+  _startVisible: 0
 --- !u!114 &7416740173205381735
 MonoBehaviour:
   m_ObjectHideFlags: 0

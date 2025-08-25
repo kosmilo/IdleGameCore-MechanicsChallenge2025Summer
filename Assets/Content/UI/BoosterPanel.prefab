@@ -771,6 +771,7 @@ MonoBehaviour:
   _generatorData: {fileID: 11400000, guid: 089eab1c83a954048bcf7b5a870603eb, type: 2}
   _countUGUI: {fileID: 294291579268558547}
   _PPSUGUI: {fileID: 5087693792573961957}
+  _canvasGroup: {fileID: 5263353238419765712}
   _hireButtons:
   - {fileID: 1548761343347471870}
   - {fileID: 5102312766505871422}
@@ -778,6 +779,7 @@ MonoBehaviour:
   - {fileID: 6955644044147684951}
   - {fileID: 7794968513768828440}
   _productionTitle: PPS
+  _startVisible: 0
 --- !u!114 &3625993464593335739
 MonoBehaviour:
   m_ObjectHideFlags: 0

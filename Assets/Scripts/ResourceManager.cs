@@ -35,9 +35,12 @@ public class ResourceManager : MonoBehaviour
     public BigDouble RPS { get; private set; } // Rats per second
     public BigDouble UnboostedRPS { get; private set; }
 
+    public Action OnGameSoftReset;
+
     #region Public Methods
 
     public BigDouble GetRatsOnStrike() => _ratsOnStrike.Round();
+    public BigDouble GetRats() => _generators[_profitGeneratorData.ID].GetCount();
     public BigDouble GetNextPrestiegeBoost() => BigDouble.Max(0.1 * (_generators[_profitGeneratorData.ID].GetCount() - 10000) / 100000, 0);
 
     public Generator GetGenerator(string ID)
@@ -206,7 +209,6 @@ public class ResourceManager : MonoBehaviour
         ScreenFade.Instance.StartScreenFaidOut(1, () =>
         {
             ResetGameResources();
-            GameEventManager.Instance.ResetEventData();
             ScreenFade.Instance.StartScreenFaidIn(1);
         });
     }
@@ -215,9 +217,12 @@ public class ResourceManager : MonoBehaviour
     {
         Profit = 0;
         BoosterMultiplier = 0;
+        _ratsOnStrike = 0;
+        _ratReturnRate = 0;
 
         CreateBoosters();
         CreateGenerators();
+        OnGameSoftReset?.Invoke();
     }
 
     #endregion
