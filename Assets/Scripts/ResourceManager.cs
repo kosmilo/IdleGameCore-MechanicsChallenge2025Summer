@@ -165,7 +165,7 @@ public class ResourceManager : MonoBehaviour
     private void Start()
     {
         LoadGame();
-        InvokeRepeating(nameof(SaveGame), 60, 60);
+        InvokeRepeating(nameof(SaveGame), 120, 120);
     }
 
     private void CreateBoosters()
@@ -248,7 +248,7 @@ public class ResourceManager : MonoBehaviour
         Generator ratGenerator = _generators[_profitGeneratorData.ID];
 
         // Rats entering strike
-        BigDouble ratsEnteringStrike = ratGenerator.GetCount() * QuitRate * Time.deltaTime;
+        BigDouble ratsEnteringStrike = ratGenerator.GetCount() * QuitRate / (1 + BoosterMultiplier) * Time.deltaTime;
         _ratsOnStrike += ratsEnteringStrike;
         ratGenerator.Remove(ratsEnteringStrike);
 
@@ -396,6 +396,11 @@ public class ResourceManager : MonoBehaviour
         GameEventManager.Instance.SetEventData(saveData.RevolutionStatus, saveData.RevolutionPhase);
 
         return true;
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveGame();
     }
 
     #endregion

@@ -6141,6 +6141,7 @@ MonoBehaviour:
   _gameEndCanvas: {fileID: 340315358}
   _becomeRatKingButton: {fileID: 1886065080}
   _becomeRatKingCostUGUI: {fileID: 1982321082}
+  _eventInfoUGUI: {fileID: 1098508803}
   _minProfitToRevolution:
     mantissa: 1
     exponent: 4

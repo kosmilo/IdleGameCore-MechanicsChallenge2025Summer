@@ -11,6 +11,9 @@ public enum EventStatus
     Completed
 }
 
+/// <summary>
+/// Manages the rat revolution event.
+/// </summary>
 public class GameEventManager : MonoBehaviour
 {
     [SerializeField] private GeneratorDataSO _ratGeneratorData; // For ID
@@ -18,6 +21,7 @@ public class GameEventManager : MonoBehaviour
     [SerializeField] private GameObject _gameEndCanvas;
     [SerializeField] private Button _becomeRatKingButton;
     [SerializeField] private TextMeshProUGUI _becomeRatKingCostUGUI;
+    [SerializeField] private TextMeshProUGUI _eventInfoUGUI;
 
     [Header("Revolution settings")]
     [SerializeField] private BigDouble _minProfitToRevolution = 10000;
@@ -71,22 +75,26 @@ public class GameEventManager : MonoBehaviour
                     case 1:
                         RatRevolutionPhase++;
                         ResourceManager.Instance.SetQuitRate(0.04f);
+                        _eventInfoUGUI.text = "More rats have joined the union.";
                         Debug.Log("Entering revolution phase: " + RatRevolutionPhase);
                         break;
                     case 2:
                         RatRevolutionPhase++;
                         ResourceManager.Instance.SetQuitRate(0.06f);
+                        _eventInfoUGUI.text = "Hire cats and dogs to make rats work again.";
                         Debug.Log("Entering revolution phase: " + RatRevolutionPhase);
                         break;
                     case 3:
                         RatRevolutionPhase++;
                         ResourceManager.Instance.SetQuitRate(0.08f);
+                        _eventInfoUGUI.text = "Rat union is gainining popularity.";
                         Debug.Log("Entering revolution phase: " + RatRevolutionPhase);
                         break;
                     case 4:
                         RatRevolutionPhase++;
                         ResourceManager.Instance.SetQuitRate(0.1f);
                         _ratsOnStrikeText = "Defective rats: ";
+                        _eventInfoUGUI.text = "Rat usion is stealing your profits.";
                         Debug.Log("Entering revolution phase: " + RatRevolutionPhase);
                         break;
                     case 5:
@@ -112,6 +120,7 @@ public class GameEventManager : MonoBehaviour
         _ratsOnStrikeUGUI.gameObject.SetActive(false);
         _becomeRatKingButton.gameObject.SetActive(false);
         ResourceManager.Instance.SetQuitRate(0f);
+        _eventInfoUGUI.text = "You are rat.";
         Debug.Log("Event data reset.");
     }
 
@@ -121,6 +130,7 @@ public class GameEventManager : MonoBehaviour
         _ratsOnStrikeUGUI.gameObject.SetActive(true);
         RatRevolutionPhase = 1;
         _ratsOnStrikeText = "Rats on strike: ";
+        _eventInfoUGUI.text = "Some rats have formed an union.";
         ResourceManager.Instance.SetQuitRate(0.005f);
         Debug.Log("Event rat revolution started");
     }
